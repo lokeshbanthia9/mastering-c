@@ -7,7 +7,7 @@
 
 - ### `EOF` Behaviour
 
-`EOF` stands for End Of File. It is a special value that indicates the end of a file has been reached. It is an integer defined in the standard input/output library. The numeric value of `EOF` is not equal to any of the values that can be stored in `char`. It's exact numeric value is implemented by the specific compiler.
+`EOF` stands for End Of File. It is a special value that indicates the end of a file has been reached. It is an integer defined in the standard input/output library. The numeric value of `EOF` is not equal to any of the values that can be stored in `char`. It's exact numeric value is implemented by the specific library being used by the compiler.
 
 - ### Approach
 
