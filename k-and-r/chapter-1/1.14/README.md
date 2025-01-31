@@ -200,7 +200,7 @@ $ ./histogram > outputs/new-line.txt
 
 ##### Output (see `outputs/new-line.txt`)
 
-```console
+```txt
 Horizontal Histogram
 -----------------------
 
@@ -229,7 +229,7 @@ hello, world
 
 ##### Output (see `outputs/simple-input.txt`)
 
-```console
+```txt
 Horizontal Histogram
 -----------------------
 
@@ -269,7 +269,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at aliquam nequ
 
 ##### Output (see `outputs/paragraph-input.txt`)
 
-```console
+```txt
 Horizontal Histogram
 -----------------------
 
@@ -428,7 +428,7 @@ $ ./histogram > outputs/every-character.txt
 
 ##### Output (see `every-character.txt`)
 
-```console
+```txt
 Horizontal Histogram
 -----------------------
 
@@ -551,7 +551,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 ##### Output (see `outputs/single-character.txt`)
 
-```console
+```txt
 Horizontal Histogram
 -----------------------
 
