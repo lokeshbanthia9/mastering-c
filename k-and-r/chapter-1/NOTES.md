@@ -79,7 +79,11 @@
 
 8. [Arguments - Call by Value](#18-arguments---call-by-value)
 
-    - [Call by Value](#call-by-value)
+    - [Passing Arguments](#passing-arguments)
+
+9. [Character Arrays](#19-character-arrays)
+
+    - [Longest Line](#longest-line)
 
 ## 1.1 Getting Started
 
@@ -804,7 +808,7 @@
 
 ## 1.8 Arguments - Call by Value
 
-- ### Call by Value
+- ### Passing Arguments
 
     - In C, all function arguments are passed *by value*; the function is given the values of its arguments in temporary variables rather than the originals.
 
@@ -813,3 +817,85 @@
     - We can also pass arguments *by reference* by providing the address (*pointer*) of the variable. Any change made to the variable passed *by reference* will also effect the original variable in the caller function.
 
     - Arrays are always passed *by reference*, since the value passed to the function is the location or address of the beginning of the array - there is no copying of array elements.
+
+## 1.9 Character Arrays
+
+- ### Longest Line
+
+    - Program to print the longest line in the input text stream.
+
+    ```c
+     #include <stdio.h>
+
+    #define MAXLINE 1000 /* maximum input line length */
+
+    int getline(char line[], int maxline);
+    void copy(char to[], char from[]);
+
+    /* print the longest input line */
+    main()
+    {
+        int len; /* current line length */
+        int max; /* maximum length seen so far */
+
+        char line[MAXLINE]; /* current input line */
+        char longest[MAXLINE]; /* longest line saved here */
+
+        max = 0;
+        while ((len = getline(line, MAXLINE)) > 0)
+            if (len > max)
+            {
+                max = len;
+                copy(longest, line);
+            }
+
+        if (max > 0) /* there was a line */
+            printf("%s", longest);
+
+        return 0;
+    }
+
+    /* getline: read a line into s, return length */
+    int getline(char s[],int lim)
+    {
+        int c, i;
+
+        for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
+            s[i] = c;
+
+        if (c == '\n')
+        {
+            s[i] = c;
+            ++i;
+        }
+
+        s[i] = '\0';
+        return i;
+    }
+
+    /* copy: copy 'from' into 'to'; assume to is big enough */
+    void copy(char to[], char from[])
+    {
+        int i;
+
+        i = 0;
+        while ((to[i] = from[i]) != '\0')
+            ++i;
+    }
+    ```
+
+    - `main` and `getline` communicate through a pair of arguments and return value. In `getline`, the arguments are declared by the line,
+
+    ```c
+    int getline(char s[], int lim);
+    ```
+
+    which specifies that the first argument `s` is an array, and the second argument `lim` is an integer. The length of the array is not required in the parameter because it is already set by the caller function, in this case, `main`. This line also declares that `getline` returns an `int`.
+
+    - If a function does not return any value, it should set its return type to `void`, which states explicitly that no value is returned, for instance, the `copy` function.
+
+    - `getline` puts the character `\0` (the *null* character, whose numerical value is `0`) at the end of the array, to mark the end of string characters. This conversion is used everywhere in C; when a string constant like `"hello\n"` appears, it is stored as an array of characters containing the characters of the string and terminated with `\0` to mark the end.
+
+    ![Internal representation of the "hello" string constant](/k-and-r/assets/hello-string-representation.png)
+
+    - The `%s` format specifier in `printf` expects the corresponding argument to be a string represented in this form.
