@@ -65,6 +65,12 @@
 
     - [Word Counting](#word-counting)
 
+6. [Arrays](#16-arrays)
+
+    - [Array Definition](#array-definition)
+
+    - [Specfic Character Count](#specfic-character-count)
+
 ## 1.1 Getting Started
 
 - ### `hello, world` program
@@ -648,3 +654,67 @@
     ```
 
     If *expression* is true, *statement_1* is executed, otherwise *statement_2* is executed. Each *statement* can be a single statement or several in braces.
+
+## 1.6 Arrays
+
+- ### Array Definition
+
+    - An array is a data structure that stores a fixed-size, sequential collection of elements of the same data type.
+    
+    - It provides a way to group multiple values under the same variable name, allowing them to be accessed and manipulated easily and efficiently using index.
+
+- ### Specfic Character Count
+
+    - Program to count the number of occurences of each digit, white space characters (blank, tab or newline), and all other characters.
+
+    ```c
+    #include <stdio.h>
+
+    /* count digits, white space, others */
+    main()
+    {
+        int c, i, nwhite, nother;
+        int ndigit[10];
+
+        nwhite = nother = 0;
+
+        for (i = 0; i < 10; ++i)
+            ndigit[i] = 0;
+
+        while ((c = getchar()) != EOF)
+            if (c >= '0' && c <= '9')
+                ++ndigit[c-'0'];
+            else if (c == ' ' || c == '\n' || c == '\t')
+                ++nwhite;
+            else
+                ++nother;
+        
+        printf("digits =");
+
+        for (i = 0; i < 10; ++i)
+            printf(" %d", ndigit[i]);
+
+        printf(", white space = %d, other = %d\n",nwhite, nother);
+    } 
+    ```
+
+    - The declaration `int ndigit[10]` declares `ndigit` to be an array of `10` integers. Array subscripts or indexes always start from `0` in C. The subscript or index can be an integer expression.
+    
+    - By definition, chars are just small integers, so `char` variables and constants are identical to `int` in arithmetic expression. For instance, `c - '0'` is an integer expression.
+
+    - The `if-elseif-else` pattern occurs frequently in programs as a way to express a multi-way decision. 
+
+    ```
+    if (condition_1)
+        statement_1
+    else if (condition_2)
+        statement_2
+    ...
+        ...
+    else
+        statement_n
+    ```
+
+    The conditions are evaluated in order from the top until some *condition* is satisfied, at that point the corresponding *statement* is executed, and the entire construction is finised. If none of the condition satisfies, the *statement* after the final *else* is executed if present. There can be any number of `else if` conditions between the initial `if` and the final `else`.
+
+    - The `switch` statement provides another way to write a multi-way branch that is particularly suitable when the condition is some integer or character expression matching one of a set of constants.
