@@ -67,9 +67,15 @@
 
 6. [Arrays](#16-arrays)
 
-    - [Array Definition](#array-definition)
+    - [Array Description](#array-description)
 
     - [Specfic Character Count](#specfic-character-count)
+
+7. [Functions](#17-functions)
+
+    - [Function Description](#function-description)
+
+    - [`power` Function](#power-function)
 
 ## 1.1 Getting Started
 
@@ -657,7 +663,7 @@
 
 ## 1.6 Arrays
 
-- ### Array Definition
+- ### Array Description
 
     - An array is a data structure that stores a fixed-size, sequential collection of elements of the same data type.
     
@@ -718,3 +724,76 @@
     The conditions are evaluated in order from the top until some *condition* is satisfied, at that point the corresponding *statement* is executed, and the entire construction is finised. If none of the condition satisfies, the *statement* after the final *else* is executed if present. There can be any number of `else if` conditions between the initial `if` and the final `else`.
 
     - The `switch` statement provides another way to write a multi-way branch that is particularly suitable when the condition is some integer or character expression matching one of a set of constants.
+
+## 1.7 Functions
+
+- ### Function Description
+
+    - A function provides a convenient way to encapsulate some computation, which can then be used without worrying about its implentation.
+
+    - A function definition has the form of,
+
+    ```
+    return_type function_name(parameter declarations if any)
+    {
+        statements
+        ...
+    }
+    ```
+
+    - Function definitions can appear in any order, and in one source file or multiple, although no function can be split between files. 
+
+- ### `power` Function
+
+    - Program to raise an integer `m` to a positive integer power `n`.
+
+    ```c
+    #include <stdio.h>
+
+    int power(int m, int n);
+
+    /* test power function */
+    main()
+    {
+        int i;
+
+        for (i = 0; i < 10; ++i)
+            printf("%d %d %d\n", i, power(2,i), power(-3,i));
+
+        return 0;
+    }
+
+    /* power: raise base to n-th power; n >= 0 */
+    int power(int base, int n)
+    {
+        int i, p;
+        p = 1;
+
+        for (i = 1; i <= n; ++i)
+            p = p * base;
+
+        return p;
+    } 
+    ```
+
+    - The function `power` is called twice by `main` inside `printf` function. Each call passes two arguments to the `power` function, which returns an integer to be formatted and printed. 
+
+    - The first line of `power` function declares the parameter types and names, and the type of the result the function returns.
+
+    ```c
+    int power(int base, int n) 
+    ```
+
+    - The names used by `power`  for its parameter are local to `power`, and are not visible to any other function. For instance, `i` in `power` is unrelated to `i` in `main` function.
+
+    - Parameters are also known as *formal arguments*, and the values passed as *actual arguments*.
+    
+    - The value that `power` computes is returned to `main` by the `return` statement. Any expression may follow `return`. A `return` statement with no expression causes control to be returned to the caller, but with no value, as does *falling off the end* of a function by reaching the terminating brace. 
+
+    - Since `main` is a function like any other, it may return a value to its caller, which is in effect the environment in which the program was executed. Typically a return value of `0` implies normal termination, and non-zero values signal unusual or erroneous termination conditions.
+
+    - The `power` function declaration before `main` says that `power` is a function that expects two `int` arguments and returns an `int`. This declaration, which is called the *function prototype*, has to agree with the definition and uses of `power`. Parameter names are optional in a function prototype, so we could also have written,
+
+    ```c
+    int power(int, int); 
+    ```
