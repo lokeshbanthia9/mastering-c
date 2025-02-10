@@ -47,6 +47,14 @@
 
     - [`while` or `for`](#while-or-for)
 
+4. [Symbolic Constants](#14-symbolic-constants)
+
+    - [Magic Numbers](#magic-numbers)
+
+    - [`#define`](#define)
+
+5. [Character Input and Output](#15-character-input-and-output)
+
 ## 1.1 Getting Started
 
 - ### `hello, world` program
@@ -92,6 +100,8 @@
 - ### `#include <stdio.h>`
 
     - Tells the compiler to include information about the standard input/output library (`stdio`).
+
+    - No semicolon at the end of `#include` statement.
 
 - ### Arguments
 
@@ -379,8 +389,44 @@
 
     - As with the `while` loop, the body of a `for` loop can be a single statement, or multiple statements enclosed in braces.
 
-- - ### `while` or `for`
+- ### `while` or `for`
 
     - The choice between using `while` and `for` loop is arbitary, based on which seems clearer.
 
     - The `for` is usally appropriate for loops in which initialization and increment are single statements and logically related, since it is more compact that `while` and keep the loop control statements in one place.
+
+## 1.4 Symbolic Constants
+
+- ### Magic Numbers
+
+    - Its bad practice to bury constants or *magic numbers* in a program; they convey little information to someone who will read the program later, and are hard to change in a systematic way later on.
+
+    - For instance, in the fahrenheit-to-celsius program, the values `300` and `20` are considered magic numbers.
+
+    - One way to deal with magic numbers is to give them meaningful names.
+
+- ### `#define`
+
+    - A `#define` line defines a *symbolic name* or *symbolic constant* to be a particular string of characters.
+
+    `#define` *name* *replacement_list*
+
+    - Thereafter, any occurrence of *name* (not in quotes) will be replaced by the corresponding *replacement_text*.
+
+    - The *replacement_text* cab be any sequence of characters; not limited to just numbers.
+
+    - In the fahrenehit-to-celsius program,
+
+    ```c
+    #define LOWER 0 /* lower limit of table */
+    #define UPPER 300 /* upper limit */
+    #define STEP 20 /* step size */ 
+    ```
+
+    The quantities `LOWER`, `UPPER` and `STEP` are symbolic constants, not variables, they do not appear in declarations.
+
+    - Symbolic constants names has the same form as variables: a sequence of letters and digits that begins with a letter. Symbolic constants name are conventionally written in upper case to easily distinguish them from variables.
+
+    - No semicolon at the end of `#define` statement.
+
+## 1.5 Character Input and Output
