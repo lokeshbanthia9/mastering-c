@@ -3,7 +3,7 @@
 
 ## Table of Contents
 
-- [Getting Started](#11-getting-started)
+1. [Getting Started](#11-getting-started)
 
     - [`hello, world` program](#hello-world-program)
 
@@ -19,7 +19,7 @@
 
     - [Escape Sequences](#escape-sequences)
 
-- [Variables and Arithmetic Expressions](#12-variables-and-arithmetic-expressions)
+2. [Variables and Arithmetic Expressions](#12-variables-and-arithmetic-expressions)
 
     - [Fahrenheit-Celsius Table](#fahrenheit-celsius-table)
 
@@ -38,6 +38,14 @@
     - [Formatted Output: Floating Point](#formatted-output-floating-point)
 
     - [Formatted Output: Width, Precision and More](#formatted-output-width-precision-and-more)
+
+3. [The `for` Statement](#13-the-for-statement)
+
+    - [Revised Fahrenheit-Celsius Table](#revised-fahrenheit-celsius-table)
+
+    - [The `for` Loop](#the-for-loop)
+
+    - [`while` or `for`](#while-or-for)
 
 ## 1.1 Getting Started
 
@@ -315,3 +323,64 @@
     | `%c`      | single character |
     | `%s`      | character string |
     | `%%`      | `%` itself |
+
+## 1.3 The `for` Statement
+
+- ### Revised Fahrenheit-Celsius Table
+
+    - Instead of using `while` loop in the fahrenehit-to-celsius program, we can use the `for` loop.
+
+    ```c
+    #include <stdio.h>
+
+    /* print Fahrenheit-Celsius table */
+    main()
+    {
+        int fahr;
+
+        for (fahr = 0; fahr <= 300; fahr = fahr + 20)
+            printf("%3d %6.1f\n", fahr, (5.0/9.0)*(fahr-32));
+    }
+    ```
+
+    - Apart from changing `while` to `for`, another major change is the elimination of most of the variables.
+
+        - The `lower` and `upper` limits, and the `step` size are being used directly as constants in the `for` statement.
+
+        - The expression that computes Celsius value is now being used as the third argument of `printf` instead of assigning a separate variable.
+
+- ### The `for` Loop
+
+    - The `for` statement is a loop, a generalization of the `while`. Within the parantheses, there are three parts, separated by semicolons.
+
+        - Initialization
+
+        ```c
+        fahr = 0
+        ```
+
+        It is done once, before the loop is entered. 
+
+        - Condition
+
+        ```c
+        fahr <= 300
+        ```
+
+        If the condition is true, the body of the loop is executed. Otherwise, the loop ends.
+
+        - Increment
+
+        ```c
+        fahr = fahr + 20
+        ```
+
+        After executing the loop body, the increment step is executed, and the condition is re-evaluated.
+
+    - As with the `while` loop, the body of a `for` loop can be a single statement, or multiple statements enclosed in braces.
+
+- - ### `while` or `for`
+
+    - The choice between using `while` and `for` loop is arbitary, based on which seems clearer.
+
+    - The `for` is usally appropriate for loops in which initialization and increment are single statements and logically related, since it is more compact that `while` and keep the loop control statements in one place.
