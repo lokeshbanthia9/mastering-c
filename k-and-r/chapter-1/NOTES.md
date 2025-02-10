@@ -77,6 +77,10 @@
 
     - [`power` Function](#power-function)
 
+8. [Arguments - Call by Value](#18-arguments---call-by-value)
+
+    - [Call by Value](#call-by-value)
+
 ## 1.1 Getting Started
 
 - ### `hello, world` program
@@ -797,3 +801,15 @@
     ```c
     int power(int, int); 
     ```
+
+## 1.8 Arguments - Call by Value
+
+- ### Call by Value
+
+    - In C, all function arguments are passed *by value*; the function is given the values of its arguments in temporary variables rather than the originals.
+
+    - If the value of local variable inside the function is changed, it does not effect the orginal variable value in the caller function.
+
+    - We can also pass arguments *by reference* by providing the address (*pointer*) of the variable. Any change made to the variable passed *by reference* will also effect the original variable in the caller function.
+
+    - Arrays are always passed *by reference*, since the value passed to the function is the location or address of the beginning of the array - there is no copying of array elements.
