@@ -55,6 +55,16 @@
 
 5. [Character Input and Output](#15-character-input-and-output)
 
+    - [Input / Output Model](#input--output-model)
+
+    - [File Copying](#file-copying)
+
+    - [Character Counting](#character-counting)
+
+    - [Line Counting](#line-counting)
+
+    - [Word Counting](#word-counting)
+
 ## 1.1 Getting Started
 
 - ### `hello, world` program
@@ -430,3 +440,211 @@
     - No semicolon at the end of `#define` statement.
 
 ## 1.5 Character Input and Output
+
+- ### Input / Output Model
+
+    - The model of I/O supported by standard library is very simple. Text input or output, regardless of where it originates or where it goes, is handled as streams of characters.
+
+    - A *text stream* is a sequence of characters divided into lines. Each line consists of zero or more characters, followed by a newline (`\n`) character.
+
+    - The simplest input and output functions provided by the standard library are `getchar` and `putchar` respectively.
+
+        - `getchar` reads the *next input character* from the input text stream and return that as its value.
+
+        ```c
+        c = getchar();
+        ```
+
+        - `putchar` prints the character content of the integer passed as the argument to the function.
+
+        ```c
+        putchar(c);
+        ```
+
+- ### File Copying
+
+    - Program to copy its input to its output one character at a time.
+
+    ```c
+    #include <stdio.h>
+
+    /* copy input to output; 1st version */
+    main()
+    {
+        int c;
+
+        c = getchar();
+        while (c != EOF)
+        {
+            putchar(c);
+            c = getchar();
+        }
+    } 
+    ```
+
+    - The relational operator `!=` means *not equal to*.
+
+    - The type `char` is meant to store single character data, but any integer type can be used alternatively.
+
+    - `EOF`
+
+        - This program uses `int` instead of `char` primarily because `getchar` return a distinctive value when there is no more input, a value that is different from any real character, called `EOF`, for end-of-file.
+
+        - The variable storing `getchar` values must be big enough to hold any value that `getchar` returns.
+
+        - `EOF` is an integer defined in `stdio` library. The specific numeric value of `EOF` is not defined in the language itself, and its implementation is left to the library, however it will not be equal to any of the values that can be stored in `char`. Hence, we use `int` in the copy program.
+
+    - A concise way of writing the same program is to include `getchar` function in the loop condition.
+
+    ```c
+    while ((c = getchar()) != EOF)
+        putchar(c); 
+    ```
+
+    This version centralizes the input, now there is only version of `getchar`. The parentheses around the assignment is necessary, because the *precedence* of `!=` is higher than of `=`, which means in the absence of parentheses, the relation test would be done first and then the assignment.
+
+- ### Character Counting
+
+    - Program to count the number of characters in the input text stream.
+
+    ```c
+    #include <stdio.h>
+    /* count characters in input; 1st version */
+    main()
+    {
+        long nc;
+
+        nc = 0;
+        while (getchar() != EOF)
+            ++nc;
+        
+        printf("%ld\n", nc);
+    } 
+    ```
+
+    - The expression `++nc` presents a new operator `++` which increments the value store by one. Its equivalent to `nc = nc + 1` but more concise and often more efficient. Similiarly, there is an operator `--` for decrement by one. These operators can be either prefix (`++nc`) or postfix (`nc++`).
+
+    - The variable `nc` is defined as the `long` type instead of `int` to prevent overflow on relatively small text stream. `%ld` is the format specifier for `long` type variables, being used in the `printf` string literal.
+
+    - An alternative approach would be to use `double` type instead of `long` to store the character count (to allow for even bigger text streams), and to use `for` loop instead of `while` to keep all the loop control statements together and the program concise.
+
+    ```c
+    #include <stdio.h>
+
+    /* count characters in input; 2nd version */
+    main()
+    {
+        double nc;
+
+        for (nc = 0; gechar() != EOF; ++nc);
+
+        printf("%.0f\n", nc);
+    } 
+    ``` 
+
+    `%.0f` is used to represent floating point numbers (`float` and `double`), printed with no fractional part.
+
+    - The body of this `for` loop is empty because all the work is being done in the test and increment parts in the `for` statement. The semicolon after `for` statement is used to indicate the empty body of the loop (also called a *null statement*).
+
+    - Even if the text stream input is empty, and the loop condition fails in the first test itself, the program still prints the correct result, which will be `0`.
+
+- ### Line Counting
+
+    - Program to count the number of lines in the input text stream.
+
+    ```c
+    #include <stdio.h>
+
+    /* count lines in input */
+    main()
+    {
+        int c, nl;
+
+        nl = 0;
+        while ((c = getchar()) != EOF)
+            if (c == '\n')
+                ++nl;
+
+        printf("%d\n", nl);
+    }
+    ```
+
+    - The double equal sign (`==`) is the C notation to check for *equality*. Double equal sign is used to distinguish from the equal sign used for assignment.
+
+    - A character between single quotes (for instance: `'a'`) represents an integer value equal to the numerical value of the character in the machine's character set. It is also known as *character constant*, although its just another way to write small integer. If we want to use a particular character, we should prefer using the character constant instead of its numerical value, one because it improves readability, and secondly because its independent of the character set used.
+
+    - Escape sequences used in string constants is also a legal character constant. For instance, `\n` stands for newline character, which has the numerical value `10` in ASCII character set.
+
+- ### Word Counting
+
+    - Program to count lines, words and characters. (a word has been assumed to be any sequence of characters not containing blank, tab or newline)
+
+    ```c
+    #include <stdio.h>
+
+    #define IN 1 /* inside a word */
+    #define OUT 0 /* outside a word */
+
+    /* count lines, words, and characters in input */
+    main()
+    {
+        int c, nl, nw, nc, state;
+
+        state = OUT;
+        nl = nw = nc = 0;
+
+        while ((c = getchar()) != EOF)
+        {
+            ++nc;
+
+            if (c == '\n')
+                ++nl;
+            if (c == ' ' || c == '\n' || c = '\t')
+                state = OUT;
+            else if (state == OUT)
+            {
+                state = IN;
+                ++nw;
+            }
+        }
+
+        printf("%d %d %d\n", nl, nw, nc);
+    }
+    ```
+
+    Every time the program encounters the first characters of a word, it increases the word counter by one. The variable `STATE`  records whether the program is currently in a word or not. Symbolic constants `IN` and `OUT` are used to increase readability.
+
+    - The assignment line sets all three variables to `0`.
+
+    ```c
+    nl = nw = nc = 0;
+    ```
+
+    Assignment expression are executed from right to left, which makes this statement similiar to,
+
+    ```c
+    nl = (nw = (nc = 0));
+    ```
+
+    - The operator `||` means *OR*, used to represent the logical OR in relational expressions.
+
+    ```c
+    if (c == ' ' || c == '\n' || c = '\t') 
+    ```
+
+    This statement will return true if any of the condition separated by OR satisfies. 
+
+    - There is a corresponding operator `&&` for AND, whose precedence is higher than `||`.
+
+    - Expressions connected by `&&` or `||` are evaluated left to right, and it is guaranteed that evaluation will stop as soon as the truth or falsehood of the expression is known. For instance, in this `if` statement, if `c` is a blank, there is no need to test whether it is a newline or a tab since the result of the expression willbe true regardless.
+
+    - `else` specifies an alternative action if the condition of `if` statement is false. The general form is,
+
+    ```
+    if (expression)
+        statement_1;
+    else
+        statement_2;
+    ```
+
+    If *expression* is true, *statement_1* is executed, otherwise *statement_2* is executed. Each *statement* can be a single statement or several in braces.
