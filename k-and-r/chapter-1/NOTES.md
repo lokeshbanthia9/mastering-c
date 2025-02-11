@@ -85,6 +85,14 @@
 
     - [Longest Line](#longest-line)
 
+10. [External Variables and Scope](#110-external-variables-and-scope)
+
+    - [Local Variables](#local-variables)
+
+    - [External Variables](#external-variables)
+
+    - [Variable Definition vs Declaration](#variable-definition-vs-declaration)
+
 ## 1.1 Getting Started
 
 - ### `hello, world` program
@@ -896,6 +904,34 @@
 
     - `getline` puts the character `\0` (the *null* character, whose numerical value is `0`) at the end of the array, to mark the end of string characters. This conversion is used everywhere in C; when a string constant like `"hello\n"` appears, it is stored as an array of characters containing the characters of the string and terminated with `\0` to mark the end.
 
-    ![Internal representation of the "hello" string constant](/k-and-r/assets/hello-string-representation.png)
+    ![Internal representation of "hello" string constant](/k-and-r/assets/hello-string-representation.png)
 
     - The `%s` format specifier in `printf` expects the corresponding argument to be a string represented in this form.
+
+## 1.10 External Variables and Scope
+
+- ### Local Variables
+
+    - A variable is only available in the innermost body where it is defined. For instance, if a variable is defined inside `main` function, no other function can have direct access to them.
+
+    - Local variable in a function comes into existence ony when the function is called, and disappears when the function is exited. They are also known as *automatic variables*.
+
+- ### External Variables
+
+    - External variables are globally accessible; they remain in existence permanently, rather than appearing and disappearing as functions are called and exited.
+
+    - An external variable must be *defined* exactly once, outside of any function; this sets aside storage for it. The variable must also be *declared* in each function that wants to access it. The declaration many be an explicit `extern` statement, or may be implicit from context. 
+
+    ```c
+    extern int max; 
+    ```
+
+    - The `extern` declaration can be omitted in implicit cases, when the definition of the external variable occurs in the same source file before its use in a particular function. 
+
+    - If the program is in several source files, `extern` declarations are needed in other files to connect the occurences of the variable. The usual practice is to collect `extern` declarations of variables and functions in a separate file, called a *header*, that is included by `#include` at the top of each file. The suffix `.h` is conventional for header names. For instance, functions of the standard library are declared in the header `<stdio.h>`.
+
+- ### Variable Definition vs Declaration
+
+    - *Definition* refers to the place where the variable is created or assigned storage.
+
+    - *Declaration* refers to places where the nature of variable is stated, but not storage is allocated. 
